@@ -1,0 +1,44 @@
+# Cifrado de un mensaje en binario usando XOR
+
+# Función que convierte una cadena de caracteres en una cadena de bits
+def string_to_bits(string):
+    return ''.join(format(ord(char), '08b') for char in string)
+
+# Función que convierte una cadena de bits en una cadena de caracteres
+def bits_to_string(bits):
+    chars = []
+    for i in range(0, len(bits), 8):
+        char = chr(int(bits[i:i+8], 2))
+        chars.append(char)
+    return ''.join(chars)
+
+# Función que realiza una operación XOR entre dos cadenas de bits
+def xor(bits, key):
+    result = ''
+    for i in range(len(bits)):
+        bit = bits[i]
+        key_bit = key[i % len(key)]
+        result_bit = str(int(bit) ^ int(key_bit))
+        result += result_bit
+    return result
+
+# Mensaje a cifrar en binario
+message = string_to_bits('Hola, mundo!')
+
+# Clave de cifrado en binario
+key = '110011'
+
+# Cifrado del mensaje con la clave usando XOR
+encrypted_message = xor(message, key)
+
+# Mensaje cifrado en binario
+print('Mensaje cifrado:', encrypted_message)
+
+# Descifrado del mensaje cifrado con la clave usando XOR
+decrypted_message = xor(encrypted_message, key)
+
+# Mensaje descifrado en binario
+print('Mensaje descifrado:', decrypted_message)
+
+# Conversión del mensaje descifrado en binario a caracteres
+print('Mensaje descifrado:', bits_to_string(decrypted_message))
